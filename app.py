@@ -285,7 +285,12 @@ def generate_pdf(data, output_path):
     if data.get('skills'):
         story.append(Paragraph("<b>TECHNICAL SKILLS</b>", styles['Heading2']))
         for category, skills in data['skills'].items():
-            story.append(Paragraph(f"<b>{category}:</b> {', '.join(skills)}", styles['Normal']))
+            # Handle skills as string or list
+            if isinstance(skills, list):
+                skills_text = ', '.join(str(s) for s in skills)
+            else:
+                skills_text = str(skills)  # Already a string like "Java, Python"
+            story.append(Paragraph(f"<b>{category}:</b> {skills_text}", styles['Normal']))
         story.append(Spacer(1, 12))
 
     # Experience
@@ -293,7 +298,9 @@ def generate_pdf(data, output_path):
     for job in data.get('experience', []):
         story.append(Paragraph(f"<b>{job.get('title', '')}</b> | {job.get('company', '')}", styles['Normal']))
         story.append(Paragraph(f"{job.get('dates', '')} | {job.get('location', '')}", styles['Normal']))
-        for bullet in job.get('bullets', [])[:4]:
+        # Try 'points' first (from LLM), then 'bullets' as fallback
+        bullets = job.get('points', []) or job.get('bullets', [])
+        for bullet in bullets[:5]:
             story.append(Paragraph(f"• {bullet}", styles['Normal']))
         story.append(Spacer(1, 8))
 
@@ -325,9 +332,14 @@ def generate_docx(data, output_path):
     if data.get('skills'):
         doc.add_heading('Technical Skills', level=1)
         for category, skills in data['skills'].items():
+            # Handle skills as string or list
+            if isinstance(skills, list):
+                skills_text = ', '.join(str(s) for s in skills)
+            else:
+                skills_text = str(skills)
             p = doc.add_paragraph()
             p.add_run(f"{category}: ").bold = True
-            p.add_run(', '.join(skills))
+            p.add_run(skills_text)
 
     # Experience
     doc.add_heading('Professional Experience', level=1)
@@ -336,7 +348,9 @@ def generate_docx(data, output_path):
         p.add_run(f"{job.get('title', '')}").bold = True
         p.add_run(f" | {job.get('company', '')}")
         doc.add_paragraph(f"{job.get('dates', '')} | {job.get('location', '')}")
-        for bullet in job.get('bullets', [])[:4]:
+        # Try 'points' first (from LLM), then 'bullets' as fallback
+        bullets = job.get('points', []) or job.get('bullets', [])
+        for bullet in bullets[:5]:
             doc.add_paragraph(f"• {bullet}")
 
     doc.save(output_path)
