@@ -191,17 +191,28 @@ def get_structured_resume(job_title: str, company: str, job_description: str, re
     "experience": [
         {
             "title": "Job Title",
-            "company": "Company Name (or 'Parent Company - Client: Client Name' for contract roles)",
+            "company": "Company Name",
             "location": "City, State",
             "dates": "MMM YYYY - MMM YYYY",
             "points": [
-                "Achievement 1 with metrics",
-                "Achievement 2 with metrics",
-                "Achievement 3 with metrics"
+                "First bullet point achievement with metrics and numbers",
+                "Second bullet point achievement with specific results",
+                "Third bullet point showing technical skills used"
             ]
         }
     ]
 }
+
+CRITICAL - SKILLS FORMAT:
+- Skills MUST be comma-separated strings like "Java, Python, JavaScript"
+- Do NOT return skills as an array of characters
+- Example correct format: "Languages": "Java, Python, JavaScript, TypeScript"
+
+CRITICAL - EXPERIENCE POINTS:
+- Each job MUST have a "points" array with 3-5 bullet points
+- Points should be specific achievements from the original resume
+- Include metrics, percentages, and specific technologies used
+- Do NOT return empty points arrays
 
 NOTE: For contract/consulting roles with multiple clients under one parent company,
 format as separate entries like:
