@@ -362,15 +362,14 @@ def generate_pdf(data: dict, output_path: str):
     # Skills
     story.append(Paragraph('TECHNICAL SKILLS', section_style))
     for category, skills in data.get('skills', {}).items():
+        # Debug: print raw skills value
+        print(f"📊 PDF Skills - {category}: type={type(skills)}, value={skills}")
         # Handle skills as list or string
         if isinstance(skills, list):
-            # Check if it's a list of single characters (LLM bug) - join without separator
-            if skills and all(len(str(s)) <= 2 for s in skills):
-                skills_text = ''.join(str(s) for s in skills)
-            else:
-                skills_text = ', '.join(str(s) for s in skills)
+            skills_text = ', '.join(str(s) for s in skills)
         else:
-            skills_text = str(skills)
+            skills_text = skills  # Already a string, use directly
+        print(f"📊 PDF Skills text: {skills_text}")
         story.append(Paragraph(f"<b>{category}:</b> {skills_text}", body_style))
 
     # Experience
