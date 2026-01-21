@@ -374,7 +374,10 @@ def generate_pdf(data: dict, output_path: str):
 
     # Experience
     story.append(Paragraph('PROFESSIONAL EXPERIENCE', section_style))
+    print(f"📋 Experience count: {len(data.get('experience', []))}")
     for job in data.get('experience', []):
+        print(f"📋 Job: {job.get('title', '')} at {job.get('company', '')}")
+        print(f"📋 Points: {job.get('points', [])}")
         story.append(Paragraph(f"<b>{job.get('title', '')}</b> | {job.get('dates', '')}", exp_title_style))
         story.append(Paragraph(f"{job.get('company', '')} - {job.get('location', '')}", company_style))
         for point in job.get('points', []):
