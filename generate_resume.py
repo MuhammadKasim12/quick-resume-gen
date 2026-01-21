@@ -65,15 +65,26 @@ def get_llm_config():
     raise ValueError("❌ No API key found. Set CEREBRAS_API_KEY, GROQ_API_KEY, or OPENROUTER_API_KEY")
 
 def load_resume():
-    """Load resume from job-application-mcp-server/resumes with current role"""
+    """Load resume from local resumes folder"""
     try:
         from resume_handler import ResumeHandler
-        handler = ResumeHandler(str(Path(__file__).parent.parent / 'job-application-mcp-server' / 'resumes'))
+        # Try local resumes folder first (for Render/Docker deployment)
+        local_resumes = Path(__file__).parent / 'resumes'
+        if local_resumes.exists():
+            handler = ResumeHandler(str(local_resumes))
+        else:
+            # Fallback to job-application-mcp-server path (for local dev)
+            handler = ResumeHandler(str(Path(__file__).parent.parent / 'job-application-mcp-server' / 'resumes'))
+
         resume = handler.get_default_resume()
         resume_content = resume.content if resume else ""
+        print(f"📄 Loaded resume: {len(resume_content)} chars")
 
         # Load current role override if exists
-        current_role_path = Path(__file__).parent.parent / 'job-application-mcp-server' / 'config' / 'current_role.json'
+        # Try local data folder first, then fallback to job-application-mcp-server
+        current_role_path = Path(__file__).parent / 'data' / 'current_role.json'
+        if not current_role_path.exists():
+            current_role_path = Path(__file__).parent.parent / 'job-application-mcp-server' / 'config' / 'current_role.json'
         if current_role_path.exists():
             with open(current_role_path) as f:
                 current = json.load(f)
