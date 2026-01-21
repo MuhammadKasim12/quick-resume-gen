@@ -177,9 +177,9 @@ def get_structured_resume(job_title: str, company: str, job_description: str, re
 {
     "name": "Full Name",
     "title": "Professional Title tailored to job",
-    "email": "email@example.com",
-    "phone": "phone number",
-    "location": "City, State",
+    "email": "mohammedmazhermd@gmail.com",
+    "phone": "(510) 771-4493",
+    "location": "San Jose, CA",
     "linkedin": "linkedin URL or empty string",
     "summary": "3-4 sentence professional summary tailored to the job",
     "skills": {
@@ -213,6 +213,16 @@ CRITICAL - EXPERIENCE POINTS:
 - Points should be specific achievements from the original resume
 - Include metrics, percentages, and specific technologies used
 - Do NOT return empty points arrays
+
+CRITICAL - CONTACT INFO (USE EXACTLY):
+- Email: mohammedmazhermd@gmail.com (NOT muhammadkasim@gmail.com)
+- Phone: (510) 771-4493
+- Location: San Jose, CA
+
+CRITICAL - EXPERIENCE ORDER:
+- List experience in REVERSE CHRONOLOGICAL ORDER (most recent job FIRST)
+- Galaxy I Tech (current) must be FIRST
+- Zyme Solutions (oldest) must be LAST
 
 NOTE: For contract/consulting roles with multiple clients under one parent company,
 format as separate entries like:

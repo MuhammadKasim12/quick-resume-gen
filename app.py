@@ -293,9 +293,25 @@ def generate_pdf(data, output_path):
             story.append(Paragraph(f"<b>{category}:</b> {skills_text}", styles['Normal']))
         story.append(Spacer(1, 12))
 
-    # Experience
+    # Experience - sort by date (most recent first)
     story.append(Paragraph("<b>PROFESSIONAL EXPERIENCE</b>", styles['Heading2']))
-    for job in data.get('experience', []):
+    experience = data.get('experience', [])
+
+    # Sort by end date (Present = 9999, then by year)
+    def get_sort_key(job):
+        dates = job.get('dates', '')
+        if 'Present' in dates:
+            return 9999
+        # Try to extract end year
+        import re
+        years = re.findall(r'20\d{2}', dates)
+        if years:
+            return int(years[-1])  # Last year mentioned
+        return 0
+
+    experience_sorted = sorted(experience, key=get_sort_key, reverse=True)
+
+    for job in experience_sorted:
         story.append(Paragraph(f"<b>{job.get('title', '')}</b> | {job.get('company', '')}", styles['Normal']))
         story.append(Paragraph(f"{job.get('dates', '')} | {job.get('location', '')}", styles['Normal']))
         # Try 'points' first (from LLM), then 'bullets' as fallback
@@ -341,9 +357,24 @@ def generate_docx(data, output_path):
             p.add_run(f"{category}: ").bold = True
             p.add_run(skills_text)
 
-    # Experience
+    # Experience - sort by date (most recent first)
     doc.add_heading('Professional Experience', level=1)
-    for job in data.get('experience', []):
+    experience = data.get('experience', [])
+
+    # Sort by end date (Present = 9999, then by year)
+    def get_sort_key(job):
+        dates = job.get('dates', '')
+        if 'Present' in dates:
+            return 9999
+        import re
+        years = re.findall(r'20\d{2}', dates)
+        if years:
+            return int(years[-1])
+        return 0
+
+    experience_sorted = sorted(experience, key=get_sort_key, reverse=True)
+
+    for job in experience_sorted:
         p = doc.add_paragraph()
         p.add_run(f"{job.get('title', '')}").bold = True
         p.add_run(f" | {job.get('company', '')}")
