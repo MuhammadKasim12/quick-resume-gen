@@ -179,7 +179,7 @@ def generate_resume_data(job_info, job_description):
 
         # Load resume with current role config
         resume = gen.load_resume()
-        print(f"✅ Resume loaded: {resume.get('name', 'Unknown')}")
+        print(f"✅ Resume loaded: {len(resume) if resume else 0} chars")
 
         job_title = job_info.get('job_title', 'Software Engineer')
         company = job_info.get('company', 'Company')
