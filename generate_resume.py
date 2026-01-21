@@ -344,7 +344,12 @@ def generate_pdf(data: dict, output_path: str):
     # Skills
     story.append(Paragraph('TECHNICAL SKILLS', section_style))
     for category, skills in data.get('skills', {}).items():
-        story.append(Paragraph(f"<b>{category}:</b> {skills}", body_style))
+        # Handle skills as list or string
+        if isinstance(skills, list):
+            skills_text = ', '.join(skills)
+        else:
+            skills_text = str(skills)
+        story.append(Paragraph(f"<b>{category}:</b> {skills_text}", body_style))
 
     # Experience
     story.append(Paragraph('PROFESSIONAL EXPERIENCE', section_style))
@@ -383,9 +388,14 @@ def generate_docx(data: dict, output_path: str):
     # Skills
     doc.add_heading('Technical Skills', level=1)
     for category, skills in data['skills'].items():
+        # Handle skills as list or string
+        if isinstance(skills, list):
+            skills_text = ', '.join(skills)
+        else:
+            skills_text = str(skills)
         p = doc.add_paragraph()
         p.add_run(f"{category}: ").bold = True
-        p.add_run(skills)
+        p.add_run(skills_text)
     
     # Experience
     doc.add_heading('Professional Experience', level=1)
