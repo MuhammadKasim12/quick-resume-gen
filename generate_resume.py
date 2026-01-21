@@ -281,7 +281,11 @@ CRITICAL REQUIREMENTS:
 
     # Check for errors
     if "error" in result:
-        print(f"❌ API Error: {result['error'].get('message', result['error'])}")
+        error = result['error']
+        if isinstance(error, dict):
+            print(f"❌ API Error: {error.get('message', str(error))}")
+        else:
+            print(f"❌ API Error: {error}")
         return None
 
     if "choices" in result:
