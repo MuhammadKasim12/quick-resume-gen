@@ -167,13 +167,19 @@ def generate():
 def generate_resume_data(job_info, job_description):
     """Generate structured resume data using the existing generate_resume module"""
     try:
+        print("📂 Checking for generate_resume module...")
+        import os
+        print(f"📂 Files in /app: {os.listdir('/app')}")
+
         # Import from local generate_resume.py
         import generate_resume as gen
         import importlib
         importlib.reload(gen)
+        print("✅ generate_resume module loaded")
 
         # Load resume with current role config
         resume = gen.load_resume()
+        print(f"✅ Resume loaded: {resume.get('name', 'Unknown')}")
 
         job_title = job_info.get('job_title', 'Software Engineer')
         company = job_info.get('company', 'Company')
