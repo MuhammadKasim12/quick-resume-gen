@@ -353,7 +353,11 @@ def generate_pdf(data: dict, output_path: str):
     for category, skills in data.get('skills', {}).items():
         # Handle skills as list or string
         if isinstance(skills, list):
-            skills_text = ', '.join(skills)
+            # Check if it's a list of single characters (LLM bug) - join without separator
+            if skills and all(len(str(s)) <= 2 for s in skills):
+                skills_text = ''.join(str(s) for s in skills)
+            else:
+                skills_text = ', '.join(str(s) for s in skills)
         else:
             skills_text = str(skills)
         story.append(Paragraph(f"<b>{category}:</b> {skills_text}", body_style))
@@ -397,7 +401,11 @@ def generate_docx(data: dict, output_path: str):
     for category, skills in data['skills'].items():
         # Handle skills as list or string
         if isinstance(skills, list):
-            skills_text = ', '.join(skills)
+            # Check if it's a list of single characters (LLM bug) - join without separator
+            if skills and all(len(str(s)) <= 2 for s in skills):
+                skills_text = ''.join(str(s) for s in skills)
+            else:
+                skills_text = ', '.join(str(s) for s in skills)
         else:
             skills_text = str(skills)
         p = doc.add_paragraph()
