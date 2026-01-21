@@ -43,12 +43,15 @@ USER_PROFILE = {
     "location": "San Jose, CA"
 }
 
-# LLM Configuration
+# LLM Configuration - Cerebras API key (fallback if env not set)
+DEFAULT_CEREBRAS_KEY = "csk-33tdk3dd6ktyyjecw65p4x5wdx4exdkrrh5d3jndfcj6cdxp"
+
 LLM_PROVIDERS = {
     "cerebras": {
         "url": "https://api.cerebras.ai/v1/chat/completions",
         "model": "llama-3.3-70b",
-        "env_key": "CEREBRAS_API_KEY"
+        "env_key": "CEREBRAS_API_KEY",
+        "default_key": DEFAULT_CEREBRAS_KEY
     },
     "groq": {
         "url": "https://api.groq.com/openai/v1/chat/completions",
@@ -65,7 +68,7 @@ LLM_PROVIDERS = {
 def get_llm_config():
     """Get first available LLM provider"""
     for provider, config in LLM_PROVIDERS.items():
-        api_key = os.environ.get(config["env_key"], "")
+        api_key = os.environ.get(config["env_key"], "") or config.get("default_key", "")
         if api_key:
             return {"provider": provider, **config, "api_key": api_key}
     raise ValueError("No LLM API key configured")
