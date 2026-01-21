@@ -290,9 +290,16 @@ CRITICAL REQUIREMENTS:
 
     if "choices" in result:
         try:
-            return json.loads(result["choices"][0]["message"]["content"])
+            content = result["choices"][0]["message"]["content"]
+            print(f"📝 LLM Response (first 500 chars): {content[:500]}")
+            data = json.loads(content)
+            # Debug: print skills structure
+            if 'skills' in data:
+                print(f"🔧 Skills structure: {type(data['skills'])} - {data['skills']}")
+            return data
         except json.JSONDecodeError as e:
             print(f"JSON parse error: {e}")
+            print(f"Raw content: {result['choices'][0]['message']['content'][:500]}")
             return None
     return None
 
