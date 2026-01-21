@@ -177,7 +177,7 @@ def get_structured_resume(job_title: str, company: str, job_description: str, re
 {
     "name": "Full Name",
     "title": "Professional Title tailored to job",
-    "email": "mohammedmazhermd@gmail.com",
+    "email": "muhammadkasim@gmail.com",
     "phone": "(510) 771-4493",
     "location": "San Jose, CA",
     "linkedin": "linkedin URL or empty string",
@@ -215,7 +215,7 @@ CRITICAL - EXPERIENCE POINTS:
 - Do NOT return empty points arrays
 
 CRITICAL - CONTACT INFO (USE EXACTLY):
-- Email: mohammedmazhermd@gmail.com (NOT muhammadkasim@gmail.com)
+- Email: muhammadkasim@gmail.com
 - Phone: (510) 771-4493
 - Location: San Jose, CA
 
