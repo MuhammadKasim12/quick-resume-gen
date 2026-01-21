@@ -47,25 +47,22 @@ LLM_PROVIDERS = {
 }
 
 def get_llm_config():
-    """Get the current LLM provider configuration"""
-    provider = os.environ.get("LLM_PROVIDER", "groq").lower()
-    if provider not in LLM_PROVIDERS:
-        print(f"⚠️  Unknown LLM provider '{provider}', falling back to 'groq'")
-        provider = "groq"
+    """Get the current LLM provider configuration - prioritize Cerebras"""
+    # Try providers in order: cerebras, groq, openrouter
+    for provider_name in ["cerebras", "groq", "openrouter"]:
+        config = LLM_PROVIDERS[provider_name]
+        api_key = os.environ.get(config["env_key"], config.get("default_key", ""))
+        if api_key:
+            print(f"✅ Using {config['name']} LLM provider")
+            return {
+                "provider": provider_name,
+                "name": config["name"],
+                "url": config["url"],
+                "model": config["model"],
+                "api_key": api_key
+            }
 
-    config = LLM_PROVIDERS[provider]
-    api_key = os.environ.get(config["env_key"], config["default_key"])
-
-    if not api_key:
-        raise ValueError(f"❌ No API key found for {config['name']}. Set {config['env_key']} environment variable.")
-
-    return {
-        "provider": provider,
-        "name": config["name"],
-        "url": config["url"],
-        "model": config["model"],
-        "api_key": api_key
-    }
+    raise ValueError("❌ No API key found. Set CEREBRAS_API_KEY, GROQ_API_KEY, or OPENROUTER_API_KEY")
 
 def load_resume():
     """Load resume from job-application-mcp-server/resumes with current role"""
