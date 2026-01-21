@@ -37,7 +37,7 @@ def load_session():
 # User Profile (your details)
 USER_PROFILE = {
     "name": "Muhammad Kasim Naina Mohammed",
-    "email": "mohammedmazhermd@gmail.com",
+    "email": "muhammadkasim@gmail.com",
     "phone": "(510) 771-4493",
     "linkedin": "https://www.linkedin.com/in/muhammad-kasim-0b297416/",
     "location": "San Jose, CA"
@@ -215,16 +215,21 @@ Location: {job_info.get('location')}
 Key Skills Required: {', '.join(job_info.get('key_skills', []))}
 
 Candidate Info:
-- Name: {USER_PROFILE['name']}
-- 12+ years Java/microservices experience
-- Currently at Intuit, previously at Amazon, PayPal, Citi
+- Name: Muhammad Kasim Naina Mohammed
+- Email: muhammadkasim@gmail.com
+- Phone: (510) 771-4493
+- 13+ years Java/microservices experience
+- Currently at Galaxy I Tech (Client: Apple), previously at Citi, Amazon, PayPal
 - Expert in: Java, Spring Boot, Microservices, Kubernetes, Kafka, AWS
 
 Write a SHORT (under 150 words) professional email expressing interest. Include:
 1. Thank them for reaching out
 2. Brief highlight of relevant experience (2-3 bullet points max)
 3. Mention availability for interview
-4. Professional signature with contact info
+4. Professional signature with:
+   Muhammad Kasim Naina Mohammed
+   muhammadkasim@gmail.com
+   (510) 771-4493
 
 Return ONLY the email body, no subject line."""
 
