@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>📄 Resume Generator</title>
+    <link rel="manifest" href="/static/manifest.json">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #1a1a2e; --card: #16213e; --accent: #e94560;
+            --text: #eaeaea; --text2: #a0a0a0; --border: #2a2a4a;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg); color: var(--text);
+            min-height: 100vh; padding: 16px; padding-bottom: 100px;
+        }
+        .header { text-align: center; padding: 20px 0; }
+        .header h1 { font-size: 24px; margin-bottom: 8px; }
+        .header p { color: var(--text2); font-size: 14px; }
+        .card {
+            background: var(--card); border-radius: 16px;
+            padding: 20px; margin-bottom: 16px;
+        }
+        .card h2 { font-size: 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        textarea {
+            width: 100%; min-height: 200px; background: var(--bg);
+            border: 1px solid var(--border); border-radius: 12px;
+            color: var(--text); padding: 14px; font-size: 16px;
+            resize: vertical; font-family: inherit;
+        }
+        textarea:focus { outline: none; border-color: var(--accent); }
+        .btn {
+            width: 100%; padding: 16px; border: none; border-radius: 12px;
+            font-size: 18px; font-weight: 600; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-primary:hover { background: #ff6b6b; }
+        .btn-primary:disabled { background: #666; cursor: not-allowed; }
+        .btn-secondary { background: var(--border); color: var(--text); margin-top: 10px; }
+        .result { display: none; }
+        .result.show { display: block; }
+        .job-info { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+        .info-item { background: var(--bg); padding: 12px; border-radius: 8px; }
+        .info-item label { font-size: 11px; color: var(--text2); display: block; margin-bottom: 4px; }
+        .info-item span { font-size: 14px; font-weight: 500; }
+        .skills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+        .skill { background: var(--accent); padding: 4px 10px; border-radius: 12px; font-size: 12px; }
+        .email-box {
+            background: var(--bg); border-radius: 12px; padding: 16px;
+            white-space: pre-wrap; font-size: 14px; line-height: 1.6;
+            max-height: 300px; overflow-y: auto;
+        }
+        .copy-btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            background: #4ade80; color: #000; margin-top: 12px;
+        }
+        .loading { display: none; text-align: center; padding: 40px; }
+        .loading.show { display: block; }
+        .spinner {
+            width: 50px; height: 50px; border: 4px solid var(--border);
+            border-top-color: var(--accent); border-radius: 50%;
+            animation: spin 1s linear infinite; margin: 0 auto 16px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .actions { display: flex; gap: 10px; margin-top: 16px; }
+        .actions .btn { flex: 1; padding: 14px; font-size: 14px; }
+        .toast {
+            position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+            background: #4ade80; color: #000; padding: 12px 24px;
+            border-radius: 8px; font-weight: 500; display: none;
+        }
+        .toast.show { display: block; animation: fadeInOut 2s ease; }
+        @keyframes fadeInOut { 0%,100% { opacity: 0; } 20%,80% { opacity: 1; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📄 Quick Resume</h1>
+        <p>Paste JD → Get Resume + Email</p>
+    </div>
+
+    <div class="card" id="inputCard">
+        <h2>📋 Paste Job Description</h2>
+        <textarea id="jdInput" placeholder="Paste the full job description here..."></textarea>
+        <button class="btn btn-primary" id="generateBtn" onclick="generate()">🚀 Generate Resume & Email</button>
+    </div>
+
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Analyzing JD & generating resume...</p>
+    </div>
+
+    <div class="result" id="result">
+        <div class="card">
+            <h2>💼 Job Details</h2>
+            <div class="job-info">
+                <div class="info-item"><label>Title</label><span id="jobTitle">-</span></div>
+                <div class="info-item"><label>Company</label><span id="jobCompany">-</span></div>
+                <div class="info-item"><label>Location</label><span id="jobLocation">-</span></div>
+                <div class="info-item"><label>Type</label><span id="jobType">-</span></div>
+            </div>
+            <div class="skills" id="skills"></div>
+        </div>
+
+        <div class="card">
+            <h2>📧 Response Email</h2>
+            <div class="email-box" id="emailContent"></div>
+            <button class="btn copy-btn" onclick="copyEmail()">📋 Copy Email</button>
+        </div>
+
+        <div class="card">
+            <h2>📄 Resume</h2>
+            <div class="actions">
+                <button class="btn btn-primary" onclick="downloadResume('pdf')">📥 PDF</button>
+                <button class="btn btn-secondary" onclick="downloadResume('docx')">📥 DOCX</button>
+            </div>
+        </div>
+
+        <button class="btn btn-secondary" onclick="reset()">🔄 New Job</button>
+    </div>
+
+    <div class="toast" id="toast">Copied to clipboard!</div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
+

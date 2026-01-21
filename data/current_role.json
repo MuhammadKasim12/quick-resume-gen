@@ -1,0 +1,99 @@
+{
+  "current_experience": {
+    "company": "Galaxy I Tech",
+    "location": "SF Bay Area",
+    "dates": "Jun 2025 - Present",
+    "type": "Contract",
+    "clients": [
+      {
+        "name": "Apple",
+        "title": "Senior Quality Engineering Architect",
+        "dates": "Jun 2025 - Present",
+        "points": [
+          "Architected and implemented MCP (Model Context Protocol) servers for secure orchestration of AI agents across STLC phases, enabling intelligent test automation",
+          "Designed AI/ML-based quality engineering solutions using RAG (Retrieval Augmented Generation) and LLMs for predictive test case generation and self-healing automation",
+          "Led full-stack test automation framework development for Web, Mobile, API, and Database testing using Python, Selenium, and Appium",
+          "Implemented Multi-Agent Orchestration Systems leveraging Agentic AI for autonomous test execution and intelligent defect prediction",
+          "Drove Test Data Management (TDM) strategies ensuring robust and scalable test environments for enterprise applications",
+          "Provided solution architecture and technical consulting for quality transformation initiatives, delivering 40% reduction in regression cycles"
+        ]
+      },
+      {
+        "name": "Intuit",
+        "title": "Senior Software Engineer",
+        "dates": "Jun 2025 - Present",
+        "points": [
+          "Developed and maintained scalable microservices for financial services platform using Java and Spring Boot, processing millions of daily transactions",
+          "Architected AI-driven workflows for automated code review and test case generation using LLMs and RAG pipelines",
+          "Built robust API integrations and RESTful services with comprehensive security and performance validation",
+          "Implemented cloud-native solutions using Kubernetes, Docker, and CI/CD pipelines with Jenkins and GitHub Actions",
+          "Collaborated with cross-functional teams on solution design and technical assessments for enterprise clients",
+          "Designed distributed systems architecture supporting real-time payment processing and fraud detection modules"
+        ]
+      }
+    ]
+  },
+  "date_corrections": {
+    "Citi": "Oct 2024 - Jun 2025"
+  },
+  "role_selection": {
+    "software_engineer": "Intuit",
+    "qa_engineer": "Apple"
+  },
+  "missing_experience": {
+    "PayPal_QE": {
+      "company": "Altimetrik - Client: PayPal",
+      "title": "Senior SDET / QE Lead",
+      "location": "San Jose, CA",
+      "dates": "Mar 2020 - Aug 2021",
+      "role_type": "qa_engineer",
+      "points": [
+        "Led quality engineering initiatives for PayPal's '4th Party Payout' compliance system, ensuring regulatory adherence for payment processing",
+        "Architected and implemented comprehensive API test automation frameworks using REST Assured and Java 8/11",
+        "Designed risk-based testing strategies for fraud detection and payment processing modules, achieving 99%+ defect-free releases",
+        "Implemented CI/CD pipelines using Jenkins and Docker for automated regression testing integrated with the CI pipeline",
+        "Built end-to-end test automation for compliance scanning logic, improving test coverage by 60%",
+        "Utilized Apache Spark and Kibana for test data analysis, metrics monitoring, and defect trend analysis",
+        "Collaborated with cross-functional teams on compliance testing for financial regulations and security standards"
+      ],
+      "technologies": ["Java 8/11", "REST Assured", "Jenkins", "Docker", "Apache Spark", "Kibana", "Microservices", "CI/CD", "Test Automation"]
+    },
+    "PayPal_SWE": {
+      "company": "Altimetrik - Client: PayPal",
+      "title": "Senior Software Engineer",
+      "location": "San Jose, CA",
+      "dates": "Mar 2020 - Aug 2021",
+      "role_type": "software_engineer",
+      "points": [
+        "Led Java development projects focusing on compliance scanning logic for the '4th Party Payout' system",
+        "Developed backend scanning logic using Java 8/11, significantly improving compliance accuracy for financial transactions",
+        "Built RESTful APIs and microservices for payment processing and payout validation workflows",
+        "Implemented containerized deployments using Docker and orchestrated CI/CD pipelines with Jenkins",
+        "Designed and developed backend services handling millions of daily payment transactions",
+        "Utilized Apache Spark for large-scale data processing and Kibana for application monitoring and analytics",
+        "Collaborated with cross-functional teams to deliver high-performance backend solutions for compliance systems"
+      ],
+      "technologies": ["Java 8/11", "REST APIs", "Microservices", "Jenkins", "Docker", "Apache Spark", "Kibana", "Spring Boot", "CI/CD"]
+    }
+  },
+  "experience_restructure": {
+    "Altimetrik": {
+      "dates": "Jan 2014 - Aug 2021",
+      "type": "Full-time Employee",
+      "note": "Parent company - worked with multiple enterprise clients",
+      "clients": ["PayPal", "Ancestry", "Intuit", "Visa (POC)"],
+      "coe": {
+        "role": "Center of Excellence (CoE) Member",
+        "points": [
+          "Key member of the Quality Engineering Center of Excellence (CoE), driving best practices and accelerators",
+          "Designed and developed multiple automation framework POCs for enterprise clients including Visa and Intuit",
+          "Created reusable automation accelerators and IP assets that reduced project delivery timelines by 30%",
+          "Led knowledge sharing initiatives and mentored engineering teams on automation best practices",
+          "Contributed to pre-sales activities and RFP responses for QE transformation engagements"
+        ]
+      }
+    }
+  },
+  "instructions": "IMPORTANT: Include PayPal experience (Mar 2020 - Aug 2021) between Ancestry and Proofpoint. Show Altimetrik as parent company for Intuit, Ancestry, PayPal. Emphasize CoE and POC work."
+}
+
