@@ -270,8 +270,11 @@ def generate_pdf(data, output_path):
     name_style = ParagraphStyle('Name', parent=styles['Title'], fontSize=18, spaceAfter=6)
     story.append(Paragraph(data.get('name', ''), name_style))
 
-    # Contact
-    contact = f"{data.get('email', '')} | {data.get('phone', '')} | {data.get('location', '')}"
+    # Contact - force correct email
+    email = "muhammadkasim@gmail.com"
+    phone = data.get('phone', '(510) 771-4493')
+    location = data.get('location', 'San Jose, CA')
+    contact = f"{email} | {phone} | {location}"
     story.append(Paragraph(contact, styles['Normal']))
     story.append(Spacer(1, 12))
 
@@ -334,9 +337,12 @@ def generate_docx(data, output_path):
     name = doc.add_heading(data.get('name', ''), 0)
     name.alignment = 1
 
-    # Contact
+    # Contact - force correct email
+    email = "muhammadkasim@gmail.com"
+    phone = data.get('phone', '(510) 771-4493')
+    location = data.get('location', 'San Jose, CA')
     contact = doc.add_paragraph()
-    contact.add_run(f"{data.get('email', '')} | {data.get('phone', '')} | {data.get('location', '')}")
+    contact.add_run(f"{email} | {phone} | {location}")
     contact.alignment = 1
 
     # Summary
